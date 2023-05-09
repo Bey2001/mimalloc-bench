@@ -57,50 +57,25 @@ target_link_libraries(espresso m)
 add_executable(barnes ${barnes_sources})
 target_link_libraries(barnes m)
 
-add_executable(larson larson/larson.cpp)
-target_compile_options(larson PRIVATE -Wno-unused-result)
-target_compile_definitions(larson PRIVATE CPP=1)
-target_link_libraries(larson pthread)
-
 add_executable(larson-sized larson/larson.cpp)
 target_compile_options(larson-sized PRIVATE -Wno-unused-result -fsized-deallocation)
 target_compile_definitions(larson-sized PRIVATE CPP=1 SIZED=1)
 target_link_libraries(larson-sized pthread)
 
-add_executable(alloc-test alloc-test/test_common.cpp alloc-test/allocator_tester.cpp)
-target_compile_definitions(alloc-test PRIVATE BENCH=4)
-target_link_libraries(alloc-test pthread)
-
 if(NOT APPLE)
   add_executable(sh6bench shbench/sh6bench-new.c)
   target_compile_definitions(sh6bench PRIVATE BENCH=1 SYS_MULTI_THREAD=1)
   target_link_libraries(sh6bench pthread)
-
-  add_executable(sh8bench shbench/sh8bench-new.c)
-  target_compile_definitions(sh8bench PRIVATE BENCH=1 SYS_MULTI_THREAD=1)
-  target_link_libraries(sh8bench pthread)
 endif()
 
 add_executable(cache-scratch cache-scratch/cache-scratch.cpp)
 target_link_libraries(cache-scratch pthread)
 
-add_executable(cache-thrash cache-thrash/cache-thrash.cpp)
-target_link_libraries(cache-thrash pthread)
-
 add_executable(xmalloc-test xmalloc-test/xmalloc-test.c)
 target_link_libraries(xmalloc-test pthread)
 
-add_executable(malloc-large-old malloc-large/malloc-large-old.cpp)
-target_link_libraries(malloc-large-old pthread)
-
-add_executable(malloc-large malloc-large/malloc-large.cpp)
-target_link_libraries(malloc-large pthread)
-
 add_executable(mstress mstress/mstress.c)
 target_link_libraries(mstress pthread)
-
-add_executable(mleak mleak/mleak.c)
-target_link_libraries(mleak pthread)
 
 add_executable(rptest rptest/rptest.c rptest/thread.c rptest/timer.c)
 target_compile_options(rptest PRIVATE -fpermissive)
@@ -112,5 +87,3 @@ target_link_libraries(glibc-simple pthread)
 
 add_executable(glibc-thread glibc-bench/bench-malloc-thread.c)
 target_link_libraries(glibc-thread pthread)
-
-add_subdirectory(security)

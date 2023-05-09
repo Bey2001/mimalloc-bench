@@ -11,16 +11,9 @@ automated scripts to pull specific versions of benchmark programs and
 allocators from Github and build them.
 
 Due to the large variance in programs and allocators, the suite is currently
-only developed for Unix-like systems, and specifically Ubuntu with `apt-get`, Fedora with `dnf`,
-and macOS (for a limited set of allocators and benchmarks).
+only developed for Unix-like systems.
 The only system-installed allocator used is glibc's implementation that ships as part of Linux's libc.
-All other allocators are downloaded and built as part of `build-bench-env.sh` --
-if you are looking to run these benchmarks on a different Linux distribution look at
-the `setup_packages` function to see the packages required to build the full set of
-allocators.
-
-It is quite easy to add new benchmarks and allocator implementations --
-please do so!.
+All other allocators are downloaded and built as part of `build-bench-env.sh`.
 
 Enjoy,
   Daan
@@ -141,39 +134,6 @@ Finally, there is a
 [security benchmark](https://github.com/daanx/mimalloc-bench/tree/master/bench/security)
 aiming at checking basic security properties of allocators.
 
-## Example
-
-Below is an example (Apr 2019) of the benchmark results on an HP
-Z4-G4 workstation with a 4-core Intel® Xeon® W2123 at 3.6 GHz with 16GB
-ECC memory, running Ubuntu 18.04.1 with LibC 2.27 and GCC 7.3.0.
-
-![bench-z4-1](doc/bench-z4-1.svg)
-![bench-z4-2](doc/bench-z4-2.svg)
-
-Memory usage:
-
-![bench-z4-rss-1](doc/bench-z4-rss-1.svg)
-![bench-z4-rss-2](doc/bench-z4-rss-2.svg)
-
-(note: the _xmalloc-testN_ memory usage should be disregarded is it
-allocates more the faster the program runs. Unfortunately,
-there are no entries for _SuperMalloc_ in the _leanN_ and _xmalloc-testN_
-benchmarks as it faulted on those)
-
-# Resulting improvements and found issues
-
-- [Minor performances improvement](https://github.com/struct/isoalloc/commit/049c12e4c2ad5c21a768f7f3873d84bf1106646a) in isoalloc
-- A [crash]( https://github.com/struct/isoalloc/issues/56 ) in isoalloc
-- Caught a [compilation issue](https://github.com/mjansson/rpmalloc/issues/263) in rpmalloc
-- [Parallel compilation](https://github.com/emeryberger/DieHard/issues/15) support in DieHarder
-- [Portability improvement](https://github.com/oneapi-src/oneTBB/pull/764) in Intel TBB malloc
-- [Various](https://github.com/google/tcmalloc/issues/155) [portability](https://github.com/google/tcmalloc/issues/128) [improvements]( https://github.com/google/tcmalloc/issues/125 ) in Google's tcmalloc
-- [Improved double-free detection]( https://github.com/microsoft/snmalloc/pull/550 ) in snmalloc
-- [Fixed compilation on modern glibc]( https://github.com/ssrg-vt/SlimGuard/pull/13 ) in SlimGuard
-- [Portability issues](https://github.com/mjansson/rpmalloc/issues/293) in rpmalloc
-- Provided [data]( https://gitlab.gnome.org/GNOME/glib/-/issues/1079#note_1627978 ) for the glib allocator.
-- Provided [data]( https://github.com/microsoft/snmalloc/pull/587#issuecomment-1442077886 ) for snmalloc hardening.
-
 # References
 
 - \[1] Emery D. Berger, Kathryn S. McKinley, Robert D. Blumofe, and Paul R. Wilson.
@@ -194,15 +154,3 @@ benchmarks as it faulted on those)
 - \[5] C. Lever, and D. Boreham. _Malloc() Performance in a Multithreaded Linux Environment._
   In USENIX Annual Technical Conference, Freenix Session. San Diego, CA. Jun. 2000.
   Available at <https://​github.​com/​kuszmaul/​SuperMalloc/​tree/​master/​tests>
-
-- \[6] Timothy Crundal. _Reducing Active-False Sharing in TCMalloc._
-   2016. <http://​courses.​cecs.​anu.​edu.​au/​courses/​CSPROJECTS/​16S1/​Reports/​Timothy*​Crundal*​Report.​pdf>. CS16S1 project at the Australian National University.
-
-- \[7] Alexey Kukanov, and Michael J Voss.
-   _The Foundations for Scalable Multi-Core Software in Intel Threading Building Blocks._
-   Intel Technology Journal 11 (4). 2007
-
-- \[8] Paul Liétar, Theodore Butler, Sylvan Clebsch, Sophia Drossopoulou, Juliana Franco, Matthew J Parkinson,
-  Alex Shamis, Christoph M Wintersteiger, and David Chisnall.
-  _Snmalloc: A Message Passing Allocator._
-  In Proceedings of the 2019 ACM SIGPLAN International Symposium on Memory Management, 122–135. ACM. 2019.
