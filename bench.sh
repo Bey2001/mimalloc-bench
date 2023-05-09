@@ -407,9 +407,6 @@ function set_spec_bench_dir {
 # --------------------------------------------------------------------
 # Run a test
 # --------------------------------------------------------------------
-readonly allocfill="     "
-readonly benchfill="           "
-
 function run_test_env_cmd { # <test name> <allocator name> <environment args> <command> <repeat>
   if ! [ -z "$sleep" ]; then
     sleep "$sleep"
@@ -444,7 +441,7 @@ function run_test_env_cmd { # <test name> <allocator name> <environment args> <c
       infile="$benchdir/barnes/input";;
   esac
 
-  $timecmd -a -o "$benchres.line" -f "$1${benchfill:${#1}} $2${allocfill:${#2}} %E %M %U %S %F %R" /usr/bin/env $3 $4 < "$infile" > "$outfile"
+  $timecmd -a -o "$benchres.line" -f "$5,$1,$2,%E,%M,%U,%S,%F,%R" /usr/bin/env $3 $4 < "$infile" > "$outfile"
 
   # fixup larson with relative time
   case "$1" in
@@ -492,7 +489,6 @@ function run_test_cmd {  # <test name> <command>
 # Run all tests
 # --------------------------------------------------------------------
 
-echo "# benchmark allocator elapsed rss user sys page-faults page-reclaims" > $benchres
 
 function run_test {  # <test>
   case $1 in
@@ -555,6 +551,8 @@ function run_test {  # <test>
 rm "$benchres"
 rm -f ./security-*-out.txt
 
+echo "#,test,alloc,time,rss,user,sys,page-faults,page-reclaims" > $benchres
+
 for ((repeat=$repeats; repeat>0; repeat--)); do
   for tst in $tests_run; do
     run_test "$tst"
@@ -565,15 +563,16 @@ done
 # --------------------------------------------------------------------
 # Wrap up
 # --------------------------------------------------------------------
+
 if test -f "$benchres"; then
   sed -i.bak "s/ 0:/ /" $benchres
   echo ""
   echo "results written to: $benchres"
   echo ""
-  echo "#------------------------------------------------------------------"
-  echo "# test    alloc   time  rss    user  sys  page-faults page-reclaims"
+  echo "------------------------------------------------------------------"
 
-  cat $benchres
+  # cat $benchres
+  awk 'BEGIN { FS = "," } ;{printf("%2s %20s %5s %10s %9s \n",$1,$2,$3,$4,$5)}' $benchres
   echo ""
 fi
 
