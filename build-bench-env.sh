@@ -30,6 +30,7 @@ readonly version_hd=5afe855  # 3.13 #a43ac40 #d880f72  #9d137ef37
 readonly version_je=5.3.0
 readonly version_mi=v1.7.7
 readonly version_tc=gperftools-2.10
+### Version of mymalloc.  Use v<year>.<month>.<day>
 readonly version_my=v2023.4.13
 
 # benchmark versions
@@ -268,12 +269,13 @@ fi
 
 ### Actually moving user library here
 if test "$setup_my" = "1"; then 
-  if ! test -d "./extern/samalloc/"; then
-    mkdir ./extern/samalloc
+  if ! test -d "./extern/mymalloc/"; then
+    mkdir ./extern/mymalloc
   fi
-  cp ../../src/libsamalloc.so ./extern/samalloc/
-  # write_version samalloc $version_sam 
-  echo "sam: $version_sam, 0, here" > "$devdir/version_sam.txt"
+  ### <path to .so> ./extern/mymalloc/
+  cp ../../src/libmymalloc.so ./extern/mymalloc/
+  # write_version samalloc $version_my
+  echo "sam: $version_my, 0, here" > "$devdir/version_my.txt"
 fi
 
 phase "install benchmarks"

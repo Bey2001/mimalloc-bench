@@ -92,7 +92,7 @@ alloc_lib_add "je"     "$localdevdir/je/lib/libjemalloc$extso"
 alloc_lib_add "tc"     "$localdevdir/tc/.libs/libtcmalloc_minimal$extso"
 alloc_lib_add "mi"     "$localdevdir/mi/out/release/libmimalloc$extso"
 ### User entered here
-alloc_lib_add "sam"    "$localdevdir/samalloc/libsamalloc$extso"
+alloc_lib_add "sam"    "$localdevdir/mymalloc/libmymalloc$extso"
 
 xmidir="$localdevdir/../../mi"
 if ! [ -d "$xmidir" ]; then
