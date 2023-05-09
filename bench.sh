@@ -492,7 +492,7 @@ function run_test_cmd {  # <test name> <command>
 # Run all tests
 # --------------------------------------------------------------------
 
-echo "#,benchmark,allocator,elapsed,rss,user,sys,page-faults,page-reclaims" > $benchres
+echo "# benchmark allocator elapsed rss user sys page-faults page-reclaims" > $benchres
 
 function run_test {  # <test>
   case $1 in
