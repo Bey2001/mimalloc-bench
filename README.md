@@ -96,6 +96,7 @@ for the versions:
 - **mi**: The [_mimalloc_](https://github.com/microsoft/mimalloc) allocator.
   We can also test the debug version as **dmi** (this can be used to check for
   any bugs in the benchmarks), and the secure version as **smi**.
+- **pa**: The [_PartitionAlloc_](https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git/+/refs/heads/main/PartitionAlloc.md) allocator used in Chromium.
 - **rp**: The [_rpmalloc_](https://github.com/mjansson/rpmalloc) allocator uses
   16-byte aligned allocations and is developed by [Mattias
   Jansson](https://twitter.com/maniccoder) at Epic Games, used for example
@@ -242,6 +243,7 @@ benchmarks as it faulted on those)
 - [Fixed compilation on modern glibc]( https://github.com/ssrg-vt/SlimGuard/pull/13 ) in SlimGuard
 - [Portability issues](https://github.com/mjansson/rpmalloc/issues/293) in rpmalloc
 - Provided [data]( https://gitlab.gnome.org/GNOME/glib/-/issues/1079#note_1627978 ) for the glib allocator.
+- Provided [data]( https://github.com/microsoft/snmalloc/pull/587#issuecomment-1442077886 ) for snmalloc hardening.
 
 # References
 
